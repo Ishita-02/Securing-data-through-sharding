@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=FileMerger
+comment1.params=outputFile\ partPaths
+comment1.target=void\ mergeFiles(java.lang.String,\ java.lang.String[])
+numComments=2

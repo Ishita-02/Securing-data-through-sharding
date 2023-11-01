@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=FileSplitter
+comment1.params=inputFile\ outputFolders
+comment1.target=void\ splitAndStoreFile(java.lang.String,\ java.lang.String[])
+numComments=2

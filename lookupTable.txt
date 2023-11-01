@@ -1,0 +1,5 @@
+1,DestinationFolder1\part1.txt
+2,DestinationFolder2\part2.txt
+3,DestinationFolder3\part3.txt
+4,DestinationFolder4\part4.txt
+5,DestinationFolder5\part5.txt
