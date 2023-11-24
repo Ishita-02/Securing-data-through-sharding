@@ -31,12 +31,16 @@ public class FileSplitter {
                     // Transfer data from input to output
                     fileChannel.transferTo(position, remainingBytes, outputChannel);
                     lookupTable.put(userId, outputFilePath);
-                    userId++; 
+                    //userId++; // Increment the user ID for the next file part
+                }
             }
-        }
+
+            // Print the lookup table for reference
             for (int id : lookupTable.keySet()) {
                 System.out.println("User ID: " + id + " | File Part: " + lookupTable.get(id));
             }
+
+            // Save the updated lookup table to a file
             saveLookupTableToFile(lookupTableFile, lookupTable);
 
             System.out.println("File divided into parts and stored in different folders successfully.");
@@ -44,6 +48,7 @@ public class FileSplitter {
             e.printStackTrace();
         }
     }
+
 
     public static HashMap<Integer, String> readLookupTableFromFile(String fileName) {
         HashMap<Integer, String> lookupTable = new HashMap<>();
@@ -57,24 +62,23 @@ public class FileSplitter {
                     lookupTable.put(userId, filePart);
                 }
             }
-        } 
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return lookupTable;
     }
 
     public static void saveLookupTableToFile(String fileName, HashMap<Integer, String> lookupTable) {
-            try (FileWriter writer = new FileWriter(fileName)) {
-                for (int userId : lookupTable.keySet()) {
-                    String filePart = lookupTable.get(userId);
-                    writer.write(userId + "," + filePart + System.lineSeparator());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for (int userId : lookupTable.keySet()) {
+                String filePart = lookupTable.get(userId);
+                writer.write(userId + "," + filePart + System.lineSeparator());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}
 
     class MainFileSplitter {
         public static void main(String[] args) {

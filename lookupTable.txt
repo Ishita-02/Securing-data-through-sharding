@@ -3,3 +3,10 @@
 3,DestinationFolder3\part3.txt
 4,DestinationFolder4\part4.txt
 5,DestinationFolder5\part5.txt
+6,DestinationFolder1\part1.txt
+7,DestinationFolder2\part2.txt
+8,DestinationFolder3\part3.txt
+9,DestinationFolder4\part4.txt
+10,DestinationFolder5\part5.txt
+11,DestinationFolder5\part5.txt
+12,DestinationFolder5\part5.txt

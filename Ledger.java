@@ -6,9 +6,33 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Ledger {
-    public static void main(String[] args) {
-        String ledgerData = readLedgerDataFromFile("ledger.txt");
+    private int blockchainId;
+    private int transactionId;
+    private int userId;
+    private String prevHash;
+    private String currHash;
+    private String timestamp;
 
+    public Ledger() {
+        this.blockchainId = 1000;
+        this.transactionId = 0;
+        this.userId = 0;
+        this.prevHash = "0";
+        this.currHash = "2ef7bde608ce5404e97d5f042f95f89f1c1c8c22a5";
+        this.timestamp = getCurrentTimestamp();
+    }
+
+    public Ledger(int blockchainId, int transactionId, int userId, String prevHash, String currHash, String timestamp) {
+        this.blockchainId = blockchainId;
+        this.transactionId = transactionId;
+        this.userId = userId;
+        this.prevHash = prevHash;
+        this.currHash = currHash;
+        this.timestamp = timestamp;
+    }
+    public static void main(String[] args) {
+
+        String ledgerData = readLedgerDataFromFile("ledger.txt");
         // Get user input for new block data
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter transaction ID: ");
@@ -25,6 +49,7 @@ public class Ledger {
         // Generate a random blockchain ID
         int blockchainId = generateRandomBlockchainId();
 
+
         // Create a new block entry
         String newBlock = blockchainId + "," + transactionId + "," + userId + "," + prevHash + "," + currHash + "," + timestamp;
 
@@ -38,6 +63,9 @@ public class Ledger {
         writeLedgerDataToFile("ledger.txt", ledgerData);
 
         System.out.println("New block added to the ledger.");
+
+        Ledger genesisBlock = new Ledger();
+        displayBlockDetails(genesisBlock);
 
         // Display the updated ledger
         displayLedger(ledgerData);
@@ -70,28 +98,48 @@ public class Ledger {
     }
 
     public static void displayLedger(String ledgerData) {
-        System.out.println("Blockchain ID  | Transaction ID | User ID |\t \t \t Previous Hash \t \t \t|\t \t \t Current Hash \t \t \t| Timestamp");
         StringTokenizer blockTokenizer = new StringTokenizer(ledgerData, "|");
+        String[] fields = {"Blockchain id", "Transaction id", "User id", "Previous hash", "Current hash ", "Timestamp"};
+        int blockCount = 1;
     
         while (blockTokenizer.hasMoreTokens()) {
+           
+            System.out.println("--------------------------------------------");
+            System.out.println("Block " + blockCount);
             String blockData = blockTokenizer.nextToken();
             StringTokenizer fieldTokenizer = new StringTokenizer(blockData, ",");
-    
+            int i=0;
             while (fieldTokenizer.hasMoreTokens()) {
                 String field = fieldTokenizer.nextToken();
-                // Add spaces between fields
-                System.out.print(String.format("%-16s", field) + " ");
+                String[] keyValue = field.split(" "); 
+                for (String pair : keyValue) {
+                    System.out.println( fields[i] +  " - " + pair);
+                    i++;
+                }
             }
-            System.out.println();
+            i = 0;
+            blockCount++;
         }
+    }   
+    
+    public static void displayBlockDetails(Ledger block) {
+        System.out.println("--------------------------------------------");
+        System.out.println("Genesis Block");
+        System.out.println("Blockchain ID: " + block.blockchainId);
+        System.out.println("Transaction ID: " + block.transactionId);
+        System.out.println("User ID: " + block.userId);
+        System.out.println("Previous Hash: " + block.prevHash);
+        System.out.println("Current Hash: " + block.currHash);
+        System.out.println("Timestamp: " + block.timestamp);
     }
-
+       
     public static String getCurrentTimestamp() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
         return dateFormat.format(new Date());
     }
 
     public static int generateRandomBlockchainId() {
         return new Random().nextInt(1000) + 1;
     }
+    
 }

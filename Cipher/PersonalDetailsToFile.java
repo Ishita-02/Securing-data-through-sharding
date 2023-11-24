@@ -15,8 +15,7 @@ import java.util.Scanner;
      String address = scanner.nextLine(); 
      System.out.print("Phone Number: "); 
      String phoneNumber = scanner.nextLine();
-     System.out.print("Symptoms: "); 
-     String symptoms = scanner.nextLine();
+     
      // Create a filename for the text file 
      String fileName = "personal_details.txt"; 
      try { FileWriter fileWriter = new FileWriter(fileName); // Write the personal details to the file 
@@ -24,7 +23,7 @@ import java.util.Scanner;
          fileWriter.write("Age: " + age + "\n"); 
          fileWriter.write("Address: " + address + "\n"); 
          fileWriter.write("Phone Number: " + phoneNumber + "\n"); 
-         fileWriter.write("Symptoms: " + symptoms + "\n"); 
+         
          // Close the file 
          fileWriter.close(); 
          System.out.println("Personal details saved to " + fileName); } 

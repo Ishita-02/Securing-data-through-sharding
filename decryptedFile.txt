@@ -1,5 +1,4 @@
-Name: amany
-Age: 52
-Address: nab
-Phone Number: 85
-Symptoms: sfefw
+Name: ABC
+Age: 20
+Address: prem nagar, Dehradun
+Phone Number: 9571236425

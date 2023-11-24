@@ -34,9 +34,9 @@ import Merger.*;
         
         switch (choice) {
             case 1:
-                    PersonalDetailsToFile.main(args);
-                    System.out.println();
-                    break;
+                PersonalDetailsToFile.main(args);
+                System.out.println();
+                break;
             case 2:
                 
                 int key = 3; 
