@@ -1,0 +1,5 @@
+UserID: 1
+Name: Ishita
+Age: 20
+Address: dfguhviunrioriv
+Phone Number: 987654321
