@@ -1,11 +1,11 @@
 package com.example.ledgerPackage;
+import com.example.hashPackage.*;
 import java.io.*;
 import java.util.StringTokenizer;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Scanner;
-
 public class Ledger {
     private int blockchainId;
     private int transactionId;
@@ -19,7 +19,7 @@ public class Ledger {
         this.transactionId = 0;
         this.userId = 0;
         this.prevHash = "0";
-        this.currHash = "2ef7bde608ce5404e97d5f042f95f89f1c1c8c22a5";
+        this.currHash = "2ef7bde608";
         this.timestamp = getCurrentTimestamp();
     }
 
@@ -36,19 +36,26 @@ public class Ledger {
         String ledgerData = readLedgerDataFromFile("ledger.txt");
         // Get user input for new block data
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter transaction ID: ");
-        int transactionId = scanner.nextInt();
+        // System.out.print("Enter transaction ID: ");
+        // int transactionId = scanner.nextInt();
+        int transactionId = generateRandomBlockchainId();
         System.out.print("Enter user ID: ");
         int userId = scanner.nextInt();
         scanner.nextLine(); 
-        System.out.print("Enter previous hash: ");
-        String prevHash = scanner.nextLine().trim();
-        System.out.print("Enter current hash: ");
-        String currHash = scanner.nextLine().trim();
+
+        // Calculate the previous hash as the current hash of the latest block
+        String prevHash = calculatePreviousHash(ledgerData);
+
+        // Calculate the current hash using HashGenerator
+        String currentFilePath = "personalDetailsUser" + userId + ".txt";
+        String currHash = Hash.customHash(currentFilePath);
+
+        // Print the calculated current hash
+        System.out.println("Current hash is: " + currHash);
         String timestamp = getCurrentTimestamp();
 
         // Generate a random blockchain ID
-        int blockchainId = generateRandomBlockchainId();
+        int blockchainId = 1000;
 
 
         // Create a new block entry
@@ -71,6 +78,26 @@ public class Ledger {
         // Display the updated ledger
         displayLedger(ledgerData);
     }
+
+    public static String calculatePreviousHash(String ledgerData) {
+        StringTokenizer blockTokenizer = new StringTokenizer(ledgerData, "|");
+        String lastBlockData = null;
+    
+        // Iterate through blocks to get the last block's data
+        while (blockTokenizer.hasMoreTokens()) {
+            lastBlockData = blockTokenizer.nextToken();
+        }
+    
+        if (lastBlockData != null) {
+            // Parse the last block's data to obtain the current hash
+            String[] lastBlockFields = lastBlockData.split(",");
+            return lastBlockFields[4]; // Assuming the current hash is at index 4
+        } else {
+            
+            return "0"; // or any default value you prefer
+        }
+    }
+
 
     public static String readLedgerDataFromFile(String fileName) {
         try {
@@ -100,7 +127,7 @@ public class Ledger {
 
     public static void displayLedger(String ledgerData) {
         StringTokenizer blockTokenizer = new StringTokenizer(ledgerData, "|");
-        String[] fields = {"Blockchain id", "Transaction id", "User id", "Previous hash", "Current hash ", "Timestamp"};
+        String[] fields = {"Blockchain id", "Transaction id", "User id", "Previous hash","Current hash ", "Timestamp"};
         int blockCount = 1;
     
         while (blockTokenizer.hasMoreTokens()) {
@@ -138,7 +165,7 @@ public class Ledger {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
         return dateFormat.format(new Date());
     }
-
+ 
     public static int generateRandomBlockchainId() {
         return new Random().nextInt(1000) + 1;
     }

@@ -5,6 +5,8 @@ import com.example.UserManagerPackage.UserManager;
 import Cipher.PersonalDetailsToFile;
 import com.example.mergerPackage.FileMerger;
 import com.example.cipherPackage.CaesarCipher;
+import com.example.hashPackage.Hash;
+import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -79,8 +81,6 @@ class Main {
                     System.out.println("Enter userId");
                     userId = sc.nextInt();
                     inputFilePath = "personalDetailsUser" + userId + ".txt"; 
-                    // String encryptFilePath = "encryptedFilesUser" + userId + ".txt";
-                    // String decryptFilePath = "decryptedFileUser" + userId + ".txt";
                     outputFile = "mergedFileUser" + userId + ".txt";
                     String[] partPaths = {
                     "DestinationFolder1" + File.separator + "User"+ userId + "part1.txt",
@@ -94,12 +94,53 @@ class Main {
                     FileMerger.mergeUserDetails(userId, outputFolders, outputFile);
                     obj1.decryptFile(userId, key);
                     System.out.println("Lookup table");
-                    LookupTable.createLookupTable(partPaths);
+                    LookupTable.createLookupTable(outputFolders);
                     LookupTable.printUserEntries(userId);
                     break;
                 case 3:
                     System.out.println("View ledger");
-                    // Add your code for viewing ledger here
+                    Ledger ledger = new Ledger();
+                    String ledgerData = ledger.readLedgerDataFromFile("ledger.txt");
+                    // Get user input for new block data
+                    int transactionId = ledger.generateRandomBlockchainId();
+                    System.out.print("Enter user ID: ");
+                    int userid = scanner.nextInt();
+                    scanner.nextLine(); 
+
+                    // Calculate the previous hash as the current hash of the latest block
+                    String prevHash = ledger.calculatePreviousHash(ledgerData);
+
+                    // Calculate the current hash using HashGenerator
+                    String currentFilePath = "personalDetailsUser" + userid + ".txt";
+                    String currHash = Hash.customHash(currentFilePath);
+
+                    // Print the calculated current hash
+                    System.out.println("Current hash is: " + currHash);
+                    String timestamp = ledger.getCurrentTimestamp();
+
+                    // Generate a random blockchain ID
+                    int blockchainId = 1000;
+
+
+                    // Create a new block entry
+                    String newBlock = blockchainId + "," + transactionId + "," + userid + "," + prevHash + "," + currHash + "," + timestamp;
+
+                    // Append the new block to the ledger data
+                    if (!ledgerData.isEmpty()) {
+                        ledgerData += "|";
+                    }
+                    ledgerData += newBlock;
+
+                    // Write the updated ledger data to a file
+                    ledger.writeLedgerDataToFile("ledger.txt", ledgerData);
+
+                    System.out.println("New block added to the ledger.");
+
+                    Ledger genesisBlock = new Ledger();
+                    ledger.displayBlockDetails(genesisBlock);
+
+                    // Display the updated ledger
+                    ledger.displayLedger(ledgerData);
                     break;
                 case 4:
                     System.out.println("Logout");
