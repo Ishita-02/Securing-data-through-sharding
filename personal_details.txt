@@ -1,4 +1,0 @@
-Name: ABC
-Age: 20
-Address: prem nagar, Dehradun
-Phone Number: 9571236425

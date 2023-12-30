@@ -1,4 +1,0 @@
-Name: mvrvr
-Age: 30
-Address: kota, rajeev nagar
-Phone Number: 987654321

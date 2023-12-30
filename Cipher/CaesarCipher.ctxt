@@ -1,9 +1,0 @@
-#BlueJ class context
-comment0.target=CaesarCipher
-comment1.params=inputFile\ outputFile\ key
-comment1.target=void\ encryptFile(java.lang.String,\ java.lang.String,\ int)
-comment2.params=inputFile\ outputFile\ key
-comment2.target=void\ decryptFile(java.lang.String,\ java.lang.String,\ int)
-comment3.params=character\ key
-comment3.target=char\ encryptCharacter(char,\ int)
-numComments=4
