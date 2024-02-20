@@ -30,7 +30,7 @@ public class Hash {
     }
 
     public static String customHashFromFile(String filePath) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder content = new StringBuilder();
             String line;
 
